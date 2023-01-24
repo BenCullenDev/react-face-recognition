@@ -14,20 +14,41 @@ const app = new Clarifai.App({
 });
 
 class App extends Component {
-  constructor(){
-    super(); 
-      this.state = {
-        input: '',
-        imgURL: ''
-      }
-    };
+  constructor() {
+    super();
+    this.state = {
+      input: '',
+      imgURL: '',
+      box: {}
+    }
+  };
+
+  calculateFaceLocation = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('inputimage');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    console.log(width, height);
+    console.log(clarifaiFace);
+    return {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow:  height - (clarifaiFace.bottom_row * height)
+    }
+  }
+
+  displayFaceBox = (box) => {
+    console.log(box);
+    this.setState({box: box})
+  }
 
   onInputChange = (event) => {
-    this.setState({input: event.target.value})
+    this.setState({ input: event.target.value })
   }
 
   onButtonSubmit = () => {
-    this.setState({imgURL: this.state.input});
+    this.setState({ imgURL: this.state.input });
     app.models
       .predict(
         {
@@ -35,30 +56,24 @@ class App extends Component {
           name: 'face-detection',
           version: '6dc7e46bc9124c5c8824be4822abe105',
           type: 'visual-detector',
-        }, this.state.input
-        ).then(
-          function(response){
-            console.log(response)
-          },
-          function(err){
-            console.log(err)
-          }
-        )
-console.log(this.state.imgURL);
+        }, this.state.input)
+      .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+      .catch(err => console.log(err))
   }
 
   render() {
-    return(
-    <div className="App">
-      
-      <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm onButtonSubmit={this.onButtonSubmit} onInputChange={this.onInputChange}/>
-      <ParticlesBg type="lines" bg={true}/>
-      <FaceRecognition imgURL={this.state.imgURL}/>
-    </div>
-  );}
+    return (
+      <div className="App">
+
+        <Navigation />
+        <Logo />
+        <Rank />
+        <ImageLinkForm onButtonSubmit={this.onButtonSubmit} onInputChange={this.onInputChange} />
+        <ParticlesBg type="lines" bg={true} />
+        <FaceRecognition box={this.state.box} imgURL={this.state.imgURL} />
+      </div>
+    );
+  }
 }
 
 export default App;
