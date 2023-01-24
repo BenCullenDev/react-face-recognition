@@ -18,14 +18,16 @@ class App extends Component {
     super(); 
       this.state = {
         input: '',
+        imgURL: ''
       }
     };
 
   onInputChange = (event) => {
-    console.log(event.target.value)
+    this.setState({input: event.target.value})
   }
 
   onButtonSubmit = () => {
+    this.setState({imgURL: this.state.input});
     app.models
       .predict(
         {
@@ -33,7 +35,7 @@ class App extends Component {
           name: 'face-detection',
           version: '6dc7e46bc9124c5c8824be4822abe105',
           type: 'visual-detector',
-        }, 'https://images.newscientist.com/wp-content/uploads/2022/02/14174128/PRI_223554170.jpg'
+        }, this.state.input
         ).then(
           function(response){
             console.log(response)
@@ -42,7 +44,7 @@ class App extends Component {
             console.log(err)
           }
         )
-console.log('clicked');
+console.log(this.state.imgURL);
   }
 
   render() {
@@ -54,7 +56,7 @@ console.log('clicked');
       <Rank />
       <ImageLinkForm onButtonSubmit={this.onButtonSubmit} onInputChange={this.onInputChange}/>
       <ParticlesBg type="lines" bg={true}/>
-      <FaceRecognition />
+      <FaceRecognition imgURL={this.state.imgURL}/>
     </div>
   );}
 }
