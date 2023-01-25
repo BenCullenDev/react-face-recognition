@@ -3,6 +3,7 @@ import './App.css';
 import ParticlesBg from 'particles-bg'
 import Clarifai from 'clarifai';
 import Navigation from './components/Navigation/Navigation';
+import Signin from './components/Signin/Signin';
 import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
@@ -67,6 +68,7 @@ class App extends Component {
 
         <Navigation />
         <Logo />
+        <Signin />
         <Rank />
         <ImageLinkForm onButtonSubmit={this.onButtonSubmit} onInputChange={this.onInputChange} />
         <ParticlesBg type="lines" bg={true} />
