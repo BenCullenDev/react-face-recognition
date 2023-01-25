@@ -4,6 +4,7 @@ import ParticlesBg from 'particles-bg'
 import Clarifai from 'clarifai';
 import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
+import Register from './components/Register/Register';
 import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
@@ -72,9 +73,10 @@ class App extends Component {
       <div className="App">
 
         <Navigation onRouteChange={this.onRouteChange}/>
-        {this.state.route === 'signin' ?
-          <Signin onRouteChange={this.onRouteChange}/>
-          : <><Logo /><Rank /><ImageLinkForm onButtonSubmit={this.onButtonSubmit} onInputChange={this.onInputChange} /><ParticlesBg type="lines" bg={true} /><FaceRecognition box={this.state.box} imgURL={this.state.imgURL} /></>}
+        {this.state.route === 'home' ? 
+        <><Logo /><Rank /><ImageLinkForm onButtonSubmit={this.onButtonSubmit} onInputChange={this.onInputChange} /><ParticlesBg type="lines" bg={true} /><FaceRecognition box={this.state.box} imgURL={this.state.imgURL} /></>
+          
+          : (this.state.route === 'signin' ? <Signin onRouteChange={this.onRouteChange}/>:<Register onRouteChange={this.onRouteChange}/> )}
       </div>
     );
   }
