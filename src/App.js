@@ -20,7 +20,8 @@ class App extends Component {
     this.state = {
       input: '',
       imgURL: '',
-      box: {}
+      box: {},
+      route: 'signin'
     }
   };
 
@@ -35,13 +36,13 @@ class App extends Component {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
       rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow:  height - (clarifaiFace.bottom_row * height)
+      bottomRow: height - (clarifaiFace.bottom_row * height)
     }
   }
 
   displayFaceBox = (box) => {
     console.log(box);
-    this.setState({box: box})
+    this.setState({ box: box })
   }
 
   onInputChange = (event) => {
@@ -67,12 +68,9 @@ class App extends Component {
       <div className="App">
 
         <Navigation />
-        <Logo />
-        <Signin />
-        <Rank />
-        <ImageLinkForm onButtonSubmit={this.onButtonSubmit} onInputChange={this.onInputChange} />
-        <ParticlesBg type="lines" bg={true} />
-        <FaceRecognition box={this.state.box} imgURL={this.state.imgURL} />
+        {this.state.route === 'signin' ?
+          <Signin />
+          : <><Logo /><Rank /><ImageLinkForm onButtonSubmit={this.onButtonSubmit} onInputChange={this.onInputChange} /><ParticlesBg type="lines" bg={true} /><FaceRecognition box={this.state.box} imgURL={this.state.imgURL} /></>}
       </div>
     );
   }
