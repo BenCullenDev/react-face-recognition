@@ -63,13 +63,17 @@ class App extends Component {
       .catch(err => console.log(err))
   }
 
+  onRouteChange = (route) => {
+    this.setState({ route: route});
+  }
+
   render() {
     return (
       <div className="App">
 
-        <Navigation />
+        <Navigation onRouteChange={this.onRouteChange}/>
         {this.state.route === 'signin' ?
-          <Signin />
+          <Signin onRouteChange={this.onRouteChange}/>
           : <><Logo /><Rank /><ImageLinkForm onButtonSubmit={this.onButtonSubmit} onInputChange={this.onInputChange} /><ParticlesBg type="lines" bg={true} /><FaceRecognition box={this.state.box} imgURL={this.state.imgURL} /></>}
       </div>
     );
