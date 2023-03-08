@@ -1,4 +1,4 @@
-.form {
+/* .form {
     width: 700px;
     background:
     radial-gradient(black 15%, transparent 16%) 0 0,
@@ -7,4 +7,15 @@
     radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
     background-color:#282828;
     background-size:16px 16px;
+} */
+
+.form {
+    width: 700px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 20px 20px 60px #1e1e1e, 
+                -20px -20px 60px #343434;
+    background: #1e1e1e;
+    background-image: linear-gradient(225deg, #232323 0%, #1e1e1e 100%);
+    color: #f0f0f0;
 }
